@@ -11,7 +11,7 @@ class User(SQLModel):
     is_active: bool = True
 
 users = [
-    User(id=1, username="Santos", password="uide.2026", is_active=True),
+    User(id=1, username="Santos", password="abc", is_active=True),
     User(id=2, username="James", password="ciberseguridad", is_active=True),
     User(id=3, username="Hollow", password="Knight", is_active=False)
 ]
